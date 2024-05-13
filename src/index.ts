@@ -106,6 +106,45 @@ app.get('/productos', async (req, res) => {
   }
 });
 
+// PUT: Actualizar producto
+app.put('/productos/:codigo_producto', async (req, res) => {
+  const { codigo_producto } = req.params;
+  const { marca, codigo_marca, nombre, stock, valor, foto, categoria } = req.body;
+
+  // Añadir la fecha actual al objeto de actualización
+  const updateData = {
+    ...req.body,
+    fecha: new Date().toISOString()  // Esto establece la fecha al momento actual
+  };
+
+  try {
+    const response = await axios.patch(`${supabaseUrl}/rest/v1/productos?codigo_producto=eq.${codigo_producto}`, updateData, {
+      headers: {
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      }
+    });
+    if (response.data.length === 0) {
+      throw new Error('Producto no encontrado o no modificado');
+    }
+    res.status(200).json(response.data[0]);  // Envía de vuelta la fila actualizada
+  } catch (error) {
+    const err = error as AxiosError;
+    if (err.response) {
+      console.error('Error al actualizar el producto:', err.response.data);
+      res.status(err.response.status).json({ error: err.response.data });
+    } else if (err.request) {
+      console.error('No response received:', err.request);
+      res.status(500).json({ error: 'No response from server' });
+    } else {
+      console.error('Error', err.message);
+      res.status(500).json({ error: err.message });
+    }
+  }
+});
+
 // Usa la documentación Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

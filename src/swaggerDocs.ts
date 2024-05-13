@@ -117,6 +117,49 @@ const swaggerDocument = {
             },
           },
         },
+        put: {
+          tags: ['Productos'],
+          summary: 'Actualizar un producto existente',
+          description: 'Actualiza los detalles de un producto existente basado en su código de producto. La fecha se actualiza automáticamente al tiempo actual.',
+          parameters: [
+            {
+              name: 'codigo_producto',
+              in: 'path',
+              required: true,
+              type: 'string',
+              description: 'Código del producto a actualizar',
+            },
+            {
+              name: 'body',
+              in: 'body',
+              description: 'Campos del producto que necesitan ser actualizados',
+              required: true,
+              schema: {
+                type: 'object',
+                properties: {
+                  marca: { type: 'string' },
+                  codigo_marca: { type: 'string' },
+                  nombre: { type: 'string' },
+                  stock: { type: 'integer' },
+                  valor: { type: 'number' },
+                  foto: { type: 'string', format: 'url', nullable: true },
+                  categoria: { type: 'string' },
+                },
+              },
+            },
+          ],
+          responses: {
+            200: {
+              description: 'Producto actualizado exitosamente',
+            },
+            400: {
+              description: 'Error al actualizar el producto',
+            },
+            404: {
+              description: 'Producto no encontrado',
+            },
+          },
+        },
       },
     },
   };
