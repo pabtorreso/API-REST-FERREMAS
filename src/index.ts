@@ -52,6 +52,60 @@ app.post('/productos', async (req, res) => {
   }
 });
 
+// GET: Obtener producto
+app.get('/productos/:codigo_producto', async (req, res) => {
+  const { codigo_producto } = req.params;
+  try {
+    const response = await axios.get(`${supabaseUrl}/rest/v1/productos?codigo_producto=eq.${codigo_producto}`, {
+      headers: {
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`
+      }
+    });
+    if (response.data.length === 0) {
+      throw new Error('Producto no encontrado');
+    }
+    res.status(200).json(response.data[0]);
+  } catch (error) {
+    const err = error as AxiosError;
+    if (err.response) {
+      console.error('Error al obtener el producto:', err.response.data);
+      res.status(err.response.status).json({ error: err.response.data });
+    } else if (err.request) {
+      console.error('No response received:', err.request);
+      res.status(500).json({ error: 'No response from server' });
+    } else {
+      console.error('Error', err.message);
+      res.status(500).json({ error: err.message });
+    }
+  }
+});
+
+// GET: Obtener todos los productos
+app.get('/productos', async (req, res) => {
+  try {
+    const response = await axios.get(`${supabaseUrl}/rest/v1/productos`, {
+      headers: {
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`
+      }
+    });
+    res.status(200).json(response.data); // Devuelve todos los productos
+  } catch (error) {
+    const err = error as AxiosError;
+    if (err.response) {
+      console.error('Error al obtener productos:', err.response.data);
+      res.status(err.response.status).json({ error: err.response.data });
+    } else if (err.request) {
+      console.error('No response received:', err.request);
+      res.status(500).json({ error: 'No response from server' });
+    } else {
+      console.error('Error', err.message);
+      res.status(500).json({ error: err.message });
+    }
+  }
+});
+
 // Usa la documentación Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

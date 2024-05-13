@@ -50,6 +50,73 @@ const swaggerDocument = {
             },
           },
         },
+        get: {
+          tags: ['Productos'],
+          summary: 'Obtener todos los productos',
+          description: 'Retorna una lista de todos los productos disponibles.',
+          responses: {
+            200: {
+              description: 'Listado de productos obtenido exitosamente',
+              schema: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    codigo_producto: { type: 'string' },
+                    marca: { type: 'string' },
+                    codigo_marca: { type: 'string' },
+                    nombre: { type: 'string' },
+                    stock: { type: 'integer' },
+                    valor: { type: 'number' },
+                    fecha: { type: 'string', format: 'date-time' },
+                    foto: { type: 'string', format: 'url', nullable: true },
+                    categoria: { type: 'string' },
+                  },
+                },
+              },
+            },
+            500: {
+              description: 'Error al obtener los productos',
+            },
+          },
+        },
+      },
+      '/productos/{codigo_producto}': {
+        get: {
+          tags: ['Productos'],
+          summary: 'Obtener un producto por su código',
+          parameters: [
+            {
+              name: 'codigo_producto',
+              in: 'path',
+              required: true,
+              type: 'string',
+              description: 'Código del producto a obtener',
+            },
+          ],
+          responses: {
+            200: {
+              description: 'Producto obtenido exitosamente',
+              schema: {
+                type: 'object',
+                properties: {
+                  codigo_producto: { type: 'string' },
+                  marca: { type: 'string' },
+                  codigo_marca: { type: 'string' },
+                  nombre: { type: 'string' },
+                  stock: { type: 'integer' },
+                  valor: { type: 'number' },
+                  fecha: { type: 'string', format: 'date-time' },
+                  foto: { type: 'string', format: 'url', nullable: true },
+                  categoria: { type: 'string' },
+                },
+              },
+            },
+            404: {
+              description: 'Producto no encontrado',
+            },
+          },
+        },
       },
     },
   };
