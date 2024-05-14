@@ -160,6 +160,27 @@ const swaggerDocument = {
             },
           },
         },
+        delete: {
+          tags: ['Productos'],
+          summary: 'Eliminar un producto por su código',
+          parameters: [
+            {
+              name: 'codigo_producto',
+              in: 'path',
+              required: true,
+              type: 'string',
+              description: 'Código del producto a eliminar',
+            },
+          ],
+          responses: {
+            204: {
+              description: 'Producto eliminado exitosamente',
+            },
+            400: {
+              description: 'Error al eliminar el producto',
+            },
+          },
+        },
       },
     },
   };
