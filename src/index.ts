@@ -145,32 +145,6 @@ app.put('/productos/:codigo_producto', async (req, res) => {
   }
 });
 
-// DELETE: Borrar producto
-app.delete('/productos/:codigo_producto', async (req, res) => {
-  const { codigo_producto } = req.params;
-  try {
-    const response = await axios.delete(`${supabaseUrl}/rest/v1/productos?codigo_producto=eq.${codigo_producto}`, {
-      headers: {
-        'apikey': supabaseKey,
-        'Authorization': `Bearer ${supabaseKey}`
-      }
-    });
-    res.status(204).send();
-  } catch (error) {
-    const err = error as AxiosError;
-    if (err.response) {
-      console.error('Error al borrar el producto:', err.response.data);
-      res.status(err.response.status).json({ error: err.response.data });
-    } else if (err.request) {
-      console.error('No response received:', err.request);
-      res.status(500).json({ error: 'No response from server' });
-    } else {
-      console.error('Error', err.message);
-      res.status(500).json({ error: err.message });
-    }
-  }
-});
-
 // Usa la documentación Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
