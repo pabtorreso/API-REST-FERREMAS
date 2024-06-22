@@ -9,6 +9,7 @@
 - [Instrucciones de uso](#cuatro)
     - [Levantar API con Docker](#cinco)
     - [Documentación API](#seis)
+    - [UNIT/INTEGRATION TEST](#siete)
 
 <a id="uno"></a>
 ## Prerrequisitos:
@@ -23,7 +24,7 @@ Es necesario tener instalado desde 20.13.1 en adelante.
 npm --version
 ```
 <a id="tres"></a>
-### 3. Docker:
+### 2. Docker:
 Para levantar la APP necesitaremos Docker Desktop. El instalador se puede descargar desde su pagina oficial: [Docker.com](https://www.docker.com/products/docker-desktop/)
 <a id="cuatro"></a>
 ## Instrucciones de uso: <a name="instrucciones"></a>
@@ -40,8 +41,26 @@ docker run -p 4000:4000 api-ferremas
 **NOTA:** Debe estar abierto el **"Docker Desktop"** para levantar la API con el contenedor.
 <a id="seis"></a>
 
-### 3. Documentacion API (Con Swagger): 
+### 2. Documentacion API (Con Swagger): 
 Para ver la documentacion de la API, basta con abrir el enlace **`http://localhost:4000/api-docs`** del prototipo con un navegador (ej. Chrome) y apareceran las operaciones CRUD.
+
+
+<a id="siete"></a>
+
+### 3. Unit Test - Integration Test API: 
+Para realizar pruebas unitarias o de integracion debe estar el docker apagado ya que se necesita levantar el servidor anonimamente para realizar las pruebas.
+
+- Para realizar las pruebas **Unitarias** se debe ejecutar por consola el siguiente comando. 
+```cmd
+npm run test
+```
+
+- Para realizar las pruebas de **Integracion** se debe ejecutar por consola el siguiente comando. 
+```cmd
+npm run test:integration
+```
+
+---
 
 **NOTA:** La API será consumida por a través de un componente el cual se conecta con la dirección donde esta alojada la API.
 `http://localhost:4000/`. Por la REACT-APP de FERREMAS https://github.com/pabtorreso/REACT-APP-FERREMAS

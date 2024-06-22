@@ -1,11 +1,9 @@
-// index.ts
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './swaggerDocs';
 import { createClient, PostgrestError } from '@supabase/supabase-js';
 import cors from 'cors';
 import axios, { AxiosError } from 'axios';
-
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -174,7 +172,9 @@ app.delete('/productos/:codigo_producto', async (req, res) => {
 // Usa la documentación Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Inicia el servidor
-app.listen(PORT, () => {
+// Inicia el servidor y exporta la instancia del servidor
+const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+export { app, server };
