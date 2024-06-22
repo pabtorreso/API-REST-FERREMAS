@@ -9,6 +9,7 @@
 - [Instrucciones de uso](#cuatro)
     - [Levantar API con Docker](#cinco)
     - [Documentación API](#seis)
+    - [UNIT/INTEGRATION TEST](#siete)
 
 <a id="uno"></a>
 ## Prerrequisitos:
@@ -56,7 +57,7 @@ npm run test
 
 - Para realizar las pruebas de **Integracion** se debe ejecutar por consola el siguiente comando. 
 ```cmd
-npm run test:integrer
+npm run test:integration
 ```
 
 ---
