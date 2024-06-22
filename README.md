@@ -63,9 +63,4 @@ npm run test:integration
 ---
 
 **NOTA:** La API será consumida por a través de un componente el cual se conecta con la dirección donde esta alojada la API.
-<<<<<<< HEAD
 `http://localhost:4000/`. Por la REACT-APP de FERREMAS https://github.com/pabtorreso/REACT-APP-FERREMAS
-=======
-`http://localhost:4000/`. Por la REACT-APP de FERREMAS https://github.com/pabtorreso/REACT-APP-FERREMAS
-
->>>>>>> 57f7179b6c1a8432b4d6068aae3e7864c0217781
