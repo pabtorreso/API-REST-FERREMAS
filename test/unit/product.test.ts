@@ -1,5 +1,6 @@
 import request from 'supertest';
-import { app, server } from '../../src/index';
+import { app } from '../../src/index';
+import { server } from '../../src/server';
 
 describe('Product API Unit Tests', () => {
   const product = {

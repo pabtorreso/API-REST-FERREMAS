@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { expect } from 'chai';
-import { app, server } from '../../src/index';
+import { app } from '../../src/index';
+import { server } from '../../src/server';
 
 describe('Product API Integration Tests', function() {
 

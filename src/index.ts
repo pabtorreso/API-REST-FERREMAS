@@ -19,6 +19,12 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 // Middleware para manejo de JSON
 app.use(express.json());
 
+
+
+// -------------------- PRODUCTOS ----------------------------- //
+
+
+
 // POST: Crear producto
 app.post('/productos', async (req, res) => {
   const { codigo_producto, marca, codigo_marca, nombre, stock, valor, foto, categoria } = req.body;
@@ -169,12 +175,157 @@ app.delete('/productos/:codigo_producto', async (req, res) => {
   }
 });
 
+
+
+// -------------------- USUARIOS ----------------------------- //
+
+
+
+// POST: Crear usuario
+app.post('/usuarios', async (req, res) => {
+  const { nombre, correo, contraseña, es_admin } = req.body;
+  try {
+    const response = await axios.post(`${supabaseUrl}/rest/v1/usuarios`, req.body, {
+      headers: {
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      }
+    });
+    res.status(201).json(response.data);
+  } catch (error) {
+    const err = error as AxiosError;
+    if (err.response) {
+      console.error('Error al insertar usuario:', err.response.data);
+      res.status(400).json({ error: err.response.data });
+    } else if (err.request) {
+      console.error('No response received:', err.request);
+      res.status(500).json({ error: 'No response from server' });
+    } else {
+      console.error('Error', err.message);
+      res.status(500).json({ error: err.message });
+    }
+  }
+});
+
+// GET: Obtener usuario
+app.get('/usuarios/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const response = await axios.get(`${supabaseUrl}/rest/v1/usuarios?id=eq.${id}`, {
+      headers: {
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`
+      }
+    });
+    if (response.data.length === 0) {
+      throw new Error('Usuario no encontrado');
+    }
+    res.status(200).json(response.data[0]);
+  } catch (error) {
+    const err = error as AxiosError;
+    if (err.response) {
+      console.error('Error al obtener el usuario:', err.response.data);
+      res.status(err.response.status).json({ error: err.response.data });
+    } else if (err.request) {
+      console.error('No response received:', err.request);
+      res.status(500).json({ error: 'No response from server' });
+    } else {
+      console.error('Error', err.message);
+      res.status(500).json({ error: err.message });
+    }
+  }
+});
+
+// GET: Obtener todos los usuarios
+app.get('/usuarios', async (req, res) => {
+  try {
+    const response = await axios.get(`${supabaseUrl}/rest/v1/usuarios`, {
+      headers: {
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`
+      }
+    });
+    res.status(200).json(response.data); // Devuelve todos los usuarios
+  } catch (error) {
+    const err = error as AxiosError;
+    if (err.response) {
+      console.error('Error al obtener usuarios:', err.response.data);
+      res.status(err.response.status).json({ error: err.response.data });
+    } else if (err.request) {
+      console.error('No response received:', err.request);
+      res.status(500).json({ error: 'No response from server' });
+    } else {
+      console.error('Error', err.message);
+      res.status(500).json({ error: err.message });
+    }
+  }
+});
+
+// PUT: Actualizar usuario
+app.put('/usuarios/:id', async (req, res) => {
+  const { id } = req.params;
+  const { nombre, correo, contraseña, es_admin } = req.body;
+
+  try {
+    const response = await axios.patch(`${supabaseUrl}/rest/v1/usuarios?id=eq.${id}`, req.body, {
+      headers: {
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      }
+    });
+    if (response.data.length === 0) {
+      throw new Error('Usuario no encontrado o no modificado');
+    }
+    res.status(200).json(response.data[0]);  // Envía de vuelta la fila actualizada
+  } catch (error) {
+    const err = error as AxiosError;
+    if (err.response) {
+      console.error('Error al actualizar el usuario:', err.response.data);
+      res.status(err.response.status).json({ error: err.response.data });
+    } else if (err.request) {
+      console.error('No response received:', err.request);
+      res.status(500).json({ error: 'No response from server' });
+    } else {
+      console.error('Error', err.message);
+      res.status(500).json({ error: err.message });
+    }
+  }
+});
+
+// DELETE: Borrar usuario
+app.delete('/usuarios/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const response = await axios.delete(`${supabaseUrl}/rest/v1/usuarios?id=eq.${id}`, {
+      headers: {
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`
+      }
+    });
+    res.status(204).send();
+  } catch (error) {
+    const err = error as AxiosError;
+    if (err.response) {
+      console.error('Error al borrar el usuario:', err.response.data);
+      res.status(err.response.status).json({ error: err.response.data });
+    } else if (err.request) {
+      console.error('No response received:', err.request);
+      res.status(500).json({ error: 'No response from server' });
+    } else {
+      console.error('Error', err.message);
+      res.status(500).json({ error: err.message });
+    }
+  }
+});
+
+
+
 // Usa la documentación Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Inicia el servidor y exporta la instancia del servidor
-const server = app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-
-export { app, server };
+// Exporta la aplicación sin iniciar el servidor
+export { app };
