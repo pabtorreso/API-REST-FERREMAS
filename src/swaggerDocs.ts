@@ -5,7 +5,7 @@ const swaggerDocument = {
     title: 'API de Gestión',
     description: 'API para gestión de productos y usuarios',
   },
-  host: 'localhost:4000',
+  host: 'https://api-rest-ferremas.up.railway.app',
   basePath: '/',
   tags: [
     {
