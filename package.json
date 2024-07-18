@@ -17,6 +17,7 @@
     "@types/express": "^4.17.21",
     "axios": "^1.6.8",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "glob": "^9.0.0",
     "lru-cache": "^9.0.0",
@@ -33,13 +34,13 @@
     "@types/jest": "^29.5.3",
     "@types/mocha": "^10.0.1",
     "@types/node": "^20.12.11",
-    "@types/supertest": "^2.0.12",
+    "@types/supertest": "^2.0.16",
     "@types/swagger-ui-express": "^4.1.6",
     "chai": "^4.4.1",
     "chai-http": "^5.0.0",
     "jest": "^29.5.0",
     "mocha": "^10.2.0",
-    "supertest": "^6.3.3",
+    "supertest": "^6.3.4",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.2"
   }
